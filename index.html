@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="Navneet Shende's interactive terminal portfolio featuring cybersecurity, application support, ServiceNow, log analysis, and technical troubleshooting experience."
+  >
+  <title>Navneet | Terminal Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#terminal-input">Skip to terminal input</a>
+
+  <div class="screen-effects" aria-hidden="true"></div>
+
+  <main class="terminal-shell">
+    <section class="terminal-window" aria-label="Navneet's terminal portfolio">
+      <header class="terminal-topbar">
+        <div class="chrome-left">
+          <div class="window-controls" aria-hidden="true">
+            <span class="window-dot"></span>
+            <span class="window-dot"></span>
+            <span class="window-dot"></span>
+          </div>
+          <div class="chrome-nav" aria-hidden="true">
+            <span class="chrome-symbol">&lsaquo;</span>
+            <span class="chrome-symbol">&rsaquo;</span>
+            <span class="chrome-symbol">&#8635;</span>
+          </div>
+        </div>
+
+        <div class="address-bar" aria-label="Terminal address">
+          <span class="address-domain">terminal.navneet.dev</span>
+          <span class="address-separator">/</span>
+          <span id="path-indicator" class="address-path">/</span>
+        </div>
+
+        <p class="terminal-title">portfolio</p>
+      </header>
+
+      <div class="terminal-summary">
+        <p class="summary-line">Navneet Shende | Cybersecurity Master's Student | Application Support | ServiceNow</p>
+        <p class="summary-line summary-muted">Use <span class="inline-code">help</span>, <span class="inline-code">tree</span>, <span class="inline-code">cat about.txt</span>, or <span class="inline-code">open resume.pdf</span> to explore.</p>
+      </div>
+
+      <noscript>
+        <p class="noscript-note">This portfolio terminal needs JavaScript enabled to run commands.</p>
+      </noscript>
+
+      <div id="terminal-output" class="terminal-output" role="log" aria-live="polite" aria-relevant="additions">
+        <div id="terminal-history" class="terminal-history"></div>
+      </div>
+
+      <form id="terminal-form" class="terminal-form" autocomplete="off">
+        <label class="sr-only" for="terminal-input">Type a terminal command</label>
+        <span id="prompt-label" class="prompt" aria-live="polite"></span>
+        <div class="input-wrap">
+          <input
+            id="terminal-input"
+            name="command"
+            type="text"
+            inputmode="text"
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="off"
+            placeholder="type help"
+          >
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
