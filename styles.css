@@ -328,7 +328,7 @@ body::after {
 .terminal-entry.banner .entry-pre {
   white-space: pre;
   overflow-x: auto;
-  font-size: clamp(0.34rem, 0.7vw, 0.58rem);
+  font-size: clamp(0.17rem, 0.35vw, 0.29rem);
   line-height: 1.12;
   color: rgba(188, 255, 202, 0.94);
   text-shadow: 0 0 10px rgba(125, 255, 147, 0.12);
