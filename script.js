@@ -8,6 +8,9 @@ const pathIndicator = document.getElementById("path-indicator");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const COMMAND_NAMES = ["help", "ls", "cd", "pwd", "cat", "tree", "whoami", "clear", "open"];
+const MAX_COMMAND_LENGTH = 120;
+const MAX_COMMAND_HISTORY = 50;
+const MAX_TERMINAL_ENTRIES = 250;
 
 const fileSystem = {
   type: "directory",
@@ -210,6 +213,16 @@ function scrollTerminalToBottom() {
   terminalOutput.scrollTop = terminalOutput.scrollHeight;
 }
 
+function trimTerminalEntries() {
+  if (!terminalHistory) {
+    return;
+  }
+
+  while (terminalHistory.childElementCount > MAX_TERMINAL_ENTRIES) {
+    terminalHistory.removeChild(terminalHistory.firstElementChild);
+  }
+}
+
 function appendCommandEntry(command) {
   if (!terminalHistory) {
     return;
@@ -227,6 +240,7 @@ function appendCommandEntry(command) {
 
   entry.append(prompt, text);
   terminalHistory.appendChild(entry);
+  trimTerminalEntries();
   scrollTerminalToBottom();
 }
 
@@ -244,6 +258,7 @@ function appendTextEntry(text, kind = "output") {
 
   entry.appendChild(content);
   terminalHistory.appendChild(entry);
+  trimTerminalEntries();
   scrollTerminalToBottom();
 }
 
@@ -507,7 +522,12 @@ function autocompleteInput() {
 }
 
 function openResumeFile() {
-  const popup = window.open("resume.pdf", "_blank", "noopener");
+  const resumeUrl = new URL("resume.pdf", window.location.href);
+  const popup = window.open(resumeUrl.toString(), "_blank", "noopener,noreferrer");
+
+  if (popup) {
+    popup.opener = null;
+  }
 
   if (!popup) {
     appendTextEntry("Popup blocked while trying to open resume.pdf. Please allow popups and try again.", "error");
@@ -629,7 +649,7 @@ function handleHelp() {
 
 function handleClear() {
   if (terminalHistory) {
-    terminalHistory.innerHTML = "";
+    terminalHistory.replaceChildren();
   }
 }
 
@@ -785,7 +805,17 @@ function handleSubmit(event) {
     return;
   }
 
+  if (command.length > MAX_COMMAND_LENGTH) {
+    appendTextEntry(`input rejected: commands must be ${MAX_COMMAND_LENGTH} characters or fewer`, "error");
+    return;
+  }
+
   commandHistory.push(command);
+
+  if (commandHistory.length > MAX_COMMAND_HISTORY) {
+    commandHistory.shift();
+  }
+
   historyIndex = commandHistory.length;
   executeCommand(command);
   terminalInput.value = "";
